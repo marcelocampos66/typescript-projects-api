@@ -1,4 +1,5 @@
-import PokedexController from './controllers/pokedexController';
+import PokedexController from '../controllers/pokedexController';
+import PokedexModel from '../models/PokedexModel';
 
 interface IPage {
   page: string;
@@ -15,4 +16,8 @@ interface IPageType {
 
 interface IControllers {
   pokedex: PokedexController;
+}
+
+interface IModels {
+  Pokedex: PokedexModel;
 }

@@ -1,10 +1,11 @@
-import PokedexModel from "../models/PokedexModel";
+import models from '../models';
+import PokedexModel from '../models/PokedexModel';
 
-class PokedexService {
+export class PokedexService {
   private model: PokedexModel;
 
-  constructor(PokedexModel: PokedexModel) {
-    this.model = PokedexModel;
+  constructor() {
+    this.model = models.Pokedex;
   }
 
   public async getPageOfPokemons(page: string) {
@@ -43,4 +44,4 @@ class PokedexService {
 
 }
 
-export default PokedexService;
+export default new PokedexService();
