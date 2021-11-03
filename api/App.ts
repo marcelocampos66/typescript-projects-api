@@ -2,9 +2,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import errorMiddleware from '../middlewares/errorMiddleware';
-import { IControllers } from '../Type';
+import { IControllers } from '../@Types/Type';
 
-type port = string | undefined;
+type port = number;
 
 class App {
   public app: express.Application;
@@ -28,6 +28,7 @@ class App {
 
   private callRouters() {
     this.app.use('/pokedex', this.controllers.pokedex.router);
+    this.app.use('/projects', this.controllers.projects.router);
   }
 
   private handleErrors() {

@@ -1,4 +1,5 @@
 import PokedexController from '../controllers/pokedexController';
+import ProjectsController from '../controllers/projectsController';
 import PokedexModel from '../models/PokedexModel';
 
 interface IPage {
@@ -16,6 +17,7 @@ interface IPageType {
 
 interface IControllers {
   pokedex: PokedexController;
+  projects: ProjectsController;
 }
 
 interface IModels {
