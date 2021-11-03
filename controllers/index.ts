@@ -1,6 +1,6 @@
-import services from '../services';
 import PokedexController from "./pokedexController";
+import PokedexService from '../services/PokedexService';
 
 export default {
-  pokedex: new PokedexController(services.PokedexService),
+  pokedex: new PokedexController(PokedexService),
 };

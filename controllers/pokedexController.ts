@@ -1,6 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-import PokedexService from '../services/PokedexService';
-import { IPage, IId, IPageType } from '../Type';
+import { PokedexService } from '../services/PokedexService';
 
 class PokedexController {
   public router: express.Router;
@@ -12,20 +11,20 @@ class PokedexController {
     this.initializeRoutes();
   }
 
-  initializeRoutes() {
+  private initializeRoutes() {
     this.router.get('/', this.getPageOfPokemons);
     this.router.get('/:id', this.getPokemonById);
     this.router.get('/types/all', this.getAllTypes);
-    this.router.post('/', this.getPageOfChosenType);
+    this.router.get('/:page/:type/page', this.getPageOfChosenType);
   };
 
   private getPageOfPokemons = async (
-    req: Request<{}, {}, {}, IPage>,
+    req: Request,
     res: Response,
     next: NextFunction
   ) => {
     const { query: { page } } = req;
-    if (!page) {
+    if (!page || typeof page !== 'string') {
       return next({ status: 404, message: 'No page found' });
     }
     const result = await this.service.getPageOfPokemons(page);
@@ -33,7 +32,7 @@ class PokedexController {
   }
 
   private getPokemonById = async (
-    req: Request<IId, {}, {}, {}>,
+    req: Request,
     res: Response,
     next: NextFunction,
   ) => {
@@ -55,12 +54,12 @@ class PokedexController {
   }
 
   private getPageOfChosenType = async (
-    req: Request<{}, {}, IPageType, {}>,
+    req: Request,
     res: Response,
     _next: NextFunction
   ) => {
-    const { body: { page, type } } = req;
-    const result = await this.service.getPageOfChosenType(page, type);
+    const { params: { page, type } } = req;
+    const result = await this.service.getPageOfChosenType(Number(page), type);
     return res.status(200).json(result);
   }
 
