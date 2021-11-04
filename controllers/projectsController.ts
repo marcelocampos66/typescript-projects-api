@@ -1,41 +1,59 @@
 import express, { Request, Response, NextFunction } from 'express';
+import Middlewares from '../middlewares/ProjectMiddlewares';
 import { ProjectsService } from '../services/ProjectsService';
+import { Project } from '../database/models/Project';
 
-class ProjectsController {
+class ProjectsController extends Middlewares {
   public router: express.Router;
   private service: ProjectsService;
 
   constructor(ProjectsService: ProjectsService) {
+    super();
     this.router = express.Router();
     this.service = ProjectsService;
     this.initializeRoutes();
   }
 
   private initializeRoutes() {
-    this.router.get('/populate', this.populateDB);
     this.router.get('/', this.getAllProjects);
-  }
-
-  private populateDB = async (
-    _req: Request,
-    res: Response,
-    _next: NextFunction
-  ) => {
-    // await getConnection()
-    //   .createQueryBuilder()
-    //   .insert()
-    //   .into(Projects)
-    //   .values(projects)
-    //   .execute();
-    res.status(200).json({ message: 'DataBase succesfully populated!' });
+    this.router.get('/:id', this.getProjectById);
+    this.router.post('/', [
+      this.verifyProjectInfos,
+      this.registerProject,
+    ]);
   }
 
   private getAllProjects = async (
+    _req: Request,
+    res: Response,
+    _next: NextFunction,
+  ) => {
+    const result: Array<Project> | [] = await this.service.getAllProjects();
+    return res.status(200).json(result);
+  }
+
+  private getProjectById = async (
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ) => {
-    return res.status(200).json({ message: 'Pong!' });
+    const { params: { id } } = req;
+    const result: Project |
+      undefined = await this.service.getProjectById(Number(id));
+    if (!result) {
+      return next({ error: 'Project not found' });
+    }
+    return res.status(200).json(result);
+  }
+
+  private registerProject = async (
+    req: Request,
+    res: Response,
+    _next: NextFunction,
+  ) => {
+    const { body } = req;
+    const result: Project = await this.service.registerProject(body);
+    return res.status(201).json(result);
   }
 
 }

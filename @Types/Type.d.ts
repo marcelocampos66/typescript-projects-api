@@ -23,3 +23,14 @@ interface IControllers {
 interface IModels {
   Pokedex: PokedexModel;
 }
+
+interface IProject {
+  name: string;
+  language: string;
+  framework: string;
+  description: string;
+  image: string;
+  isFinished: boolean;
+  isDeployed: boolean;
+  tags: Array<string>;
+}

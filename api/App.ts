@@ -11,7 +11,7 @@ class App {
   public port: port;
   private controllers: IControllers;
 
-  constructor(port: port, controllers: IControllers ) {
+  constructor(port: port, controllers: IControllers) {
     this.app = express();
     this.controllers = controllers;
     this.port = port;

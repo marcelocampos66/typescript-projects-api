@@ -1,9 +1,19 @@
 import 'dotenv/config';
+import 'reflect-metadata';
+import { createConnection } from 'typeorm';
+import config from '../ormconfig';
 import App from './App';
 import controllers from '../controllers';
 
 const PORT = process.env.PORT || 8080;
 
-const server = new App(Number(PORT), controllers);
+(async () => {
+  await createConnection(config).then(async () => {
+    console.log('Connected to MySQL');
+  });
+  const server = new App(Number(PORT), controllers);
+  server.startServer();
+})();
 
-server.startServer();
+// const server = new App(Number(PORT), controllers);
+// server.startServer();
