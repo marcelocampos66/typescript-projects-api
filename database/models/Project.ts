@@ -28,6 +28,9 @@ export class Project {
   image: string;
 
   @Column()
+  link: string;
+
+  @Column()
   isFinished: boolean;
 
   @Column()

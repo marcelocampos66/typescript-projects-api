@@ -10,6 +10,7 @@ class Helpers {
       framework: joi.string().min(2).required(),
       description: joi.string().min(12).required(),
       image: joi.string().min(12).required(),
+      link: joi.string().min(12).required(),
       isFinished: joi.boolean().required(),
       isDeployed: joi.boolean().required(),
       tags: joi.array().required(),

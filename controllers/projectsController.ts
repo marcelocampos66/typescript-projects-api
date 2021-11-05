@@ -19,8 +19,10 @@ class ProjectsController extends Middlewares {
     this.router.get('/:id', this.getProjectById);
     this.router.post('/', [
       this.verifyProjectInfos,
+      this.verifyProjectExists,
       this.registerProject,
     ]);
+    this.router.delete('/:id', this.deleteProject);
   }
 
   private getAllProjects = async (
@@ -41,7 +43,7 @@ class ProjectsController extends Middlewares {
     const result: Project |
       undefined = await this.service.getProjectById(Number(id));
     if (!result) {
-      return next({ error: 'Project not found' });
+      return next({ status: 404, error: 'Project not found' });
     }
     return res.status(200).json(result);
   }
@@ -54,6 +56,20 @@ class ProjectsController extends Middlewares {
     const { body } = req;
     const result: Project = await this.service.registerProject(body);
     return res.status(201).json(result);
+  }
+
+  private deleteProject = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    const { params: { id } } = req;
+    const result: { message: string; }
+      | undefined = await this.service.deleteProject(Number(id));
+    if (!result) {
+      return next({ status: 404, error: 'Project not found' });
+    }
+    return res.status(200).json();
   }
 
 }

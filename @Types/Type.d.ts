@@ -30,6 +30,7 @@ interface IProject {
   framework: string;
   description: string;
   image: string;
+  link: string;
   isFinished: boolean;
   isDeployed: boolean;
   tags: Array<string>;

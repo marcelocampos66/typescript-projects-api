@@ -31,6 +31,7 @@ export class ProjectsService {
     newProject.framework = project.framework;
     newProject.description = project.description;
     newProject.image = project.image;
+    newProject.link = project.link;
     newProject.isFinished = project.isFinished;
     newProject.isDeployed = project.isDeployed;
     await projectRepository.save(newProject);
@@ -41,6 +42,13 @@ export class ProjectsService {
       await tagRepository.save(currentTag);
     });
     return newProject;
+  }
+
+  public async deleteProject(id: number) {
+    const projectRepository = getRepository(Project);
+    const result = await projectRepository.delete(id);
+    if (result.affected === 0) return;
+    return ({ message: 'Project succesfully deleted' });
   }
 
 }
