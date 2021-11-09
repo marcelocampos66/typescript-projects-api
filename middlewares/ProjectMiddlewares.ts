@@ -30,7 +30,7 @@ class Middlewares {
   ) => {
     const { body: { name } } = req;
     const projectRepository = getRepository(Project);
-    const exists = await projectRepository.find({ name });
+    const exists = await projectRepository.findOne({ name });
     if (exists) {
       return res.status(409).json({ message: 'Project already exists' });
     }

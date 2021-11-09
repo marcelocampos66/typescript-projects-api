@@ -31,9 +31,11 @@ export class ProjectsService {
     newProject.framework = project.framework;
     newProject.description = project.description;
     newProject.image = project.image;
-    newProject.link = project.link;
+    newProject.projectLink = project.projectLink;
+    newProject.deployLink = project.deployLink;
     newProject.isFinished = project.isFinished;
     newProject.isDeployed = project.isDeployed;
+    newProject.isTested = project.isTested;
     await projectRepository.save(newProject);
     project.tags.forEach(async (tag) => {
       const currentTag = new Tag();

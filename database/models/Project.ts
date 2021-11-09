@@ -28,13 +28,19 @@ export class Project {
   image: string;
 
   @Column()
-  link: string;
+  projectLink: string;
+
+  @Column()
+  deployLink: string;
 
   @Column()
   isFinished: boolean;
 
   @Column()
   isDeployed: boolean;
+
+  @Column()
+  isTested: boolean;
 
   @OneToMany(() => Tag, (tags: Tag) => tags.project)
   tags: Array<Tag>;
